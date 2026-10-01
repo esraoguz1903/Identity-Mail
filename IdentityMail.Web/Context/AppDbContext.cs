@@ -27,5 +27,6 @@ namespace IdentityMail.Web.Context
         }
 
         public DbSet<UserMessage> UserMessages { get; set; }
+        public DbSet<Category> Categories { get; set; }
     }
 }

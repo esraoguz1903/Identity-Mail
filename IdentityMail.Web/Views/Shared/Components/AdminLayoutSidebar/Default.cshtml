@@ -1,0 +1,48 @@
+﻿@model AdminDashboardViewModel
+@{
+    Layout = null;
+}
+
+<aside class="hidden md:flex flex-col w-64 fixed inset-y-0 left-0 bg-white border-r border-slate-200/80 z-30 justify-between">
+    <div>
+        <!-- Üstte NovaConnect logosu ve 'YÖNETİCİ PANELİ' rozeti/alt başlığı -->
+        <div class="h-20 px-6 flex items-center gap-3 border-b border-slate-100">
+            <div class="w-10 h-10 rounded-xl bg-purple-600 flex items-center justify-center text-white shadow-md shadow-purple-600/30">
+                <span class="material-symbols-outlined text-2xl">forum</span>
+            </div>
+            <div>
+                <div class="font-bold text-slate-900 tracking-tight text-lg leading-tight">NovaConnect</div>
+                <div class="flex items-center gap-1.5 mt-0.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span class="text-[10px] font-bold text-purple-600 uppercase tracking-wider">Yönetici Paneli</span>
+                </div>
+            </div>
+        </div>
+        <!-- 4 Ana Sekme Menüsü -->
+        <div class="px-3.5 py-6">
+            <div class="px-3 pb-2.5 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                YÖNETİM MENÜSÜ
+            </div>
+            <nav class="space-y-1">
+                <!-- 1. Gösterge Paneli -->
+                <a asp-controller="AdminDashboard" asp-action="Dashboard" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all bg-purple-600 text-white shadow-sm shadow-purple-600/25" id="nav-btn-dashboard">
+                    <span class="material-symbols-outlined text-lg">dashboard</span>
+                    <span>Gösterge Paneli</span>
+                </a>
+                <!-- 2. Rol Yönetimi -->
+                <a asp-controller="AdminRoleAssign" asp-action="ListRole" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all text-slate-600 hover:text-purple-700 hover:bg-purple-50/70" id="nav-btn-roles">
+                    <span class="material-symbols-outlined text-lg">manage_accounts</span>
+                    <span>Rol Yönetimi</span>
+                </a>
+                <!-- 4. Şikayet Edilen Mesajlar -->
+                <a asp-controller="AdminReport" asp-action="Index" class="nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all text-slate-600 hover:text-purple-700 hover:bg-purple-50/70" id="nav-btn-reports">
+                    <div class="flex items-center gap-3">
+                        <span class="material-symbols-outlined text-lg">report</span>
+                        <span>Şikayet Edilen Mesajlar</span>
+                    </div>
+                    <span class="text-[11px] font-bold px-2 py-0.5 bg-rose-100 text-rose-700 rounded-full border border-rose-200">@Model.ReportMessages</span>
+                </a>
+            </nav>
+        </div>
+    </div>
+</aside>

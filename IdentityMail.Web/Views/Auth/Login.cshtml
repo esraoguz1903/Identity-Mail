@@ -1,20 +1,247 @@
-﻿@using IdentityMail.Web.DTOs.UserDtos
-@model LoginDto
+﻿@model LoginDto
 @{
     ViewData["Title"] = "Login";
+    Layout = null;
 }
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>NovaConnect - Giriş Yap</title>
+    <!-- Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <!-- Tailwind CSS with Plugins -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Tailwind Configuration -->
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-container": "#453268",
+                        "primary": "#68548d",
+                        "primary-fixed": "#ebdcff",
+                        "inverse-surface": "#2e3132",
+                        "outline-variant": "#cbc4d0",
+                        "on-secondary-container": "#005d79",
+                        "on-error-container": "#93000a",
+                        "surface-container-highest": "#e1e3e4",
+                        "on-tertiary": "#ffffff",
+                        "surface-dim": "#d9dadb",
+                        "tertiary-container": "#83b386",
+                        "on-tertiary-fixed": "#002109",
+                        "secondary-fixed": "#bee9ff",
+                        "on-primary-fixed": "#230f45",
+                        "surface-container": "#edeeef",
+                        "primary-fixed-dim": "#d3bcfc",
+                        "on-secondary-fixed-variant": "#004d65",
+                        "on-background": "#191c1d",
+                        "error": "#ba1a1a",
+                        "surface-container-low": "#f3f4f5",
+                        "surface-variant": "#e1e3e4",
+                        "on-secondary-fixed": "#001f2a",
+                        "on-primary-fixed-variant": "#503d73",
+                        "surface": "#f8f9fa",
+                        "surface-bright": "#f8f9fa",
+                        "on-primary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "outline": "#7a7580",
+                        "surface-tint": "#68548d",
+                        "primary-container": "#b39ddb",
+                        "secondary-container": "#84d7fd",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-fixed-dim": "#a2d3a4",
+                        "surface-container-high": "#e7e8e9",
+                        "secondary": "#006685",
+                        "on-tertiary-container": "#194523",
+                        "inverse-on-surface": "#f0f1f2",
+                        "on-error": "#ffffff",
+                        "on-surface": "#191c1d",
+                        "on-tertiary-fixed-variant": "#24502c",
+                        "tertiary-fixed": "#bdefbe",
+                        "secondary-fixed-dim": "#7ed1f7",
+                        "tertiary": "#3c6842",
+                        "on-surface-variant": "#49454f",
+                        "on-secondary": "#ffffff",
+                        "background": "#f8f9fa",
+                        "inverse-primary": "#d3bcfc"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xl": "32px",
+                        "sm": "12px",
+                        "xs": "4px",
+                        "sidebar-width": "280px",
+                        "container-max": "1200px",
+                        "md": "16px",
+                        "lg": "24px",
+                        "base": "8px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Inter", "sans-serif"],
+                        "title-md": ["Inter", "sans-serif"],
+                        "headline-xl": ["Inter", "sans-serif"],
+                        "body-lg": ["Inter", "sans-serif"],
+                        "body-sm": ["Inter", "sans-serif"],
+                        "headline-lg-mobile": ["Inter", "sans-serif"],
+                        "label-bold": ["Inter", "sans-serif"],
+                        "label-sm": ["Inter", "sans-serif"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "title-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "headline-xl": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "label-bold": ["12px", { "lineHeight": "16px", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+        }
 
-<h1>Giriş Yap</h1>
+        /* Custom Input styles per guidelines */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
 
-<form method="post">
-    <label>Email</label>
-    <input type="email" asp-for="Email" class="form-control" required />
-    <br />
+        .soft-shadow {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body class="antialiased text-on-surface h-screen w-full overflow-hidden flex">
+    <!-- Left Panel: Abstract Background -->
+    <!-- Left Panel: Modern Abstract CSS Background -->
+    <!-- Left Panel: Pastel Abstract CSS Background (Orijinal Renkler Korundu) -->
+    <div class="hidden lg:flex flex-1 relative overflow-hidden items-center justify-center bg-gradient-to-br from-purple-100 via-indigo-50 to-purple-100">
 
-    <label>Şifre</label>
-    <input type="password" asp-for="Password" class="form-control" required />
-    <br />
+        <!-- Abstract Glowing Orbs (Yumuşak Pastel Işık Küreleri) -->
+        <div class="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-purple-300/50 blur-[100px] pointer-events-none"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-[400px] h-[400px] rounded-full bg-blue-200/50 blur-[100px] pointer-events-none"></div>
+        <div class="absolute top-[40%] right-[10%] w-[300px] h-[300px] rounded-full bg-pink-200/40 blur-[80px] pointer-events-none"></div>
 
-    <span class="text-danger">@Html.ValidationSummary()</span>
-    <button class="btn btn-outline-dark">Giriş Yap</button>
-</form>
+        <!-- Floating Glass Content (Yumuşak Beyaz Cam Kart) -->
+        <div class="relative z-10 bg-white/50 backdrop-blur-xl border border-white/80 rounded-[2.5rem] p-12 max-w-lg text-center shadow-[0_8px_32px_0_rgba(100,84,141,0.1)] transition-transform hover:scale-105 duration-500">
+
+            <!-- İkon Kutusu -->
+            <div class="w-20 h-20 mx-auto bg-white rounded-2xl flex items-center justify-center shadow-sm mb-8 border border-purple-50">
+                <span class="material-symbols-outlined text-purple-600 text-5xl drop-shadow-sm" style="font-variation-settings: 'FILL' 1;">forum</span>
+            </div>
+
+            <h1 class="text-4xl md:text-5xl font-black text-slate-800 mb-6 tracking-tight">NovaConnect</h1>
+            <p class="text-lg text-slate-600 font-medium leading-relaxed">
+                Kurumsal iletişimi daha insancıl, sakin ve kullanışlı hale getiriyoruz.
+            </p>
+        </div>
+    </div>
+    <!-- Right Panel: Authentication Form -->
+    <div class="w-full lg:w-[640px] flex items-center justify-center p-md sm:p-lg lg:p-xl bg-surface relative">
+        <!-- Subtle background shapes for mobile/tablet when left panel is hidden -->
+        <div class="absolute top-[-10%] right-[-10%] w-[300px] h-[300px] rounded-full bg-primary-fixed/50 blur-[80px] lg:hidden"></div>
+        <div class="absolute bottom-[-10%] left-[-10%] w-[250px] h-[250px] rounded-full bg-secondary-fixed/50 blur-[80px] lg:hidden"></div>
+        <div class="w-full max-w-[420px] bg-surface-container-lowest rounded-[16px] soft-shadow border border-outline-variant/30 p-lg sm:p-xl relative z-10">
+            <!-- Header -->
+            <div class="text-center mb-xl">
+                <!-- Mobile Logo -->
+                <div class="lg:hidden w-12 h-12 mx-auto bg-primary-fixed rounded-full flex items-center justify-center mb-md">
+                    <span class="material-symbols-outlined text-primary text-2xl" style="font-variation-settings: 'FILL' 1;">forum</span>
+                </div>
+                <h2 class="font-headline-lg-mobile sm:font-headline-lg text-headline-lg-mobile sm:text-headline-lg text-on-surface mb-xs">Hoş Geldiniz</h2>
+                <p class="font-body-sm text-body-sm text-on-surface-variant">Lütfen hesabınıza giriş yapın.</p>
+            </div>
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <!-- Şifre Değiştirme Başarılı Kutusu -->
+                <div class="mb-lg p-md rounded-xl bg-tertiary-container/20 border border-tertiary text-on-tertiary-container flex items-start shadow-sm">
+                    <span class="material-symbols-outlined mr-sm text-tertiary">task_alt</span>
+                    <p class="font-body-sm text-body-sm pt-1">@TempData["SuccessMessage"]</p>
+                </div>
+            }
+            <!-- Form -->
+            <form class="space-y-lg" asp-controller="Auth" asp-action="Login" method="post">
+                <!-- Email Field -->
+                <div>
+                    <label class="block font-label-bold text-label-bold text-on-surface mb-xs ml-xs" for="email">E-posta</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-sm flex items-center pointer-events-none">
+                            <span class="material-symbols-outlined text-outline text-xl">mail</span>
+                        </div>
+                        <input class="w-full bg-surface-container-lowest border border-outline-variant/60 rounded-xl py-sm pl-[40px] pr-sm font-body-lg text-body-lg text-on-surface placeholder:text-outline transition-all duration-200 focus:border-secondary-container focus:ring-2 focus:ring-secondary-container/30 outline-none" id="email" name="Email" placeholder="ornek@sirket.com" required="" type="email">
+                    </div>
+                </div>
+                <!-- Password Field -->
+                <div>
+                    <label class="block font-label-bold text-label-bold text-on-surface mb-xs ml-xs" for="password">Şifre</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-sm flex items-center pointer-events-none">
+                            <span class="material-symbols-outlined text-outline text-xl">lock</span>
+                        </div>
+                        <input class="w-full bg-surface-container-lowest border border-outline-variant/60 rounded-xl py-sm pl-[40px] pr-[40px] font-body-lg text-body-lg text-on-surface placeholder:text-outline transition-all duration-200 focus:border-secondary-container focus:ring-2 focus:ring-secondary-container/30 outline-none" id="password" name="Password" placeholder="••••••••" required="" type="password">
+                        <button class="absolute inset-y-0 right-0 pr-sm flex items-center text-outline hover:text-on-surface transition-colors cursor-pointer outline-none" type="button">
+                            <span class="material-symbols-outlined text-xl" id="togglePassword">visibility_off</span>
+                        </button>
+                    </div>
+                </div>
+                <!-- Options Row -->
+                <div class="flex items-center justify-between mt-sm mb-lg">
+                    <label class="flex items-center gap-2 cursor-pointer group">
+                        <input class="rounded border-outline-variant text-primary focus:ring-primary/30 w-4 h-4 cursor-pointer transition-colors group-hover:border-primary" type="checkbox">
+                        <span class="font-body-sm text-body-sm text-on-surface-variant group-hover:text-on-surface transition-colors">Beni Hatırla</span>
+                    </label>
+                    <a class="font-label-bold text-label-bold text-primary hover:text-primary-fixed-dim transition-colors" href="/Password/ForgotPassword">Şifremi Unuttum?</a>
+                </div>
+
+                <!-- Submit Button -->
+                <span class="text-danger">@Html.ValidationSummary()</span>
+                <button class="w-full bg-primary-container hover:bg-primary-fixed-dim text-on-primary-container font-title-md text-title-md py-sm px-lg rounded-full transition-all duration-200 active:scale-[0.98] soft-shadow flex items-center justify-center gap-2" type="submit">
+                    <span class="">Giriş Yap</span>
+                    <span class="material-symbols-outlined text-xl">arrow_forward</span>
+                </button>
+            </form>
+            <!-- Footer / Sign Up Link -->
+            <div class="mt-xl text-center">
+                <p class="font-body-sm text-body-sm text-on-surface-variant">
+                    Hesabınız yok mu?
+                    <a class="font-label-bold text-label-bold text-primary hover:text-primary-fixed-dim transition-colors ml-xs" href="/Auth/Register">Kayıt Ol</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    <!-- Minimal script for password toggle -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggleButton = document.getElementById('togglePassword');
+            const passwordInput = document.getElementById('password');
+
+            if(toggleButton && passwordInput) {
+                toggleButton.parentElement.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                    passwordInput.setAttribute('type', type);
+                    toggleButton.textContent = type === 'password' ? 'visibility_off' : 'visibility';
+                });
+            }
+        });
+    </script>
+
+
+</body>
+</html>

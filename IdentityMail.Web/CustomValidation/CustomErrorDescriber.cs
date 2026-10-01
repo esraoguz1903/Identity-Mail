@@ -57,5 +57,16 @@ namespace IdentityMail.Web.CustomValidation
                 Description = $"{userName} kullanıcı adı daha önceden alınmış."
             };
         }
+
+        public override IdentityError DuplicateEmail(string email)
+        {
+            return new IdentityError
+            {
+                Code = "DuplicateEmail",
+                Description = $"{email} maili daha önceden alınmış."
+            };
+        }
+
+        
     }
 }

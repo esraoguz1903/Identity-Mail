@@ -1,0 +1,66 @@
+﻿@model List<UserMessage>
+@{
+    ViewData["Title"] = "TrashMail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br />
+<div class="flex items-center gap-4 mb-4 mt-2 px-4 lg:px-8">
+    <div class="w-12 h-12 flex items-center justify-center bg-primary-container text-on-primary-container rounded-full shadow-sm">
+        <span class="material-symbols-outlined text-[26px]">delete</span>
+    </div>
+    <div>
+        <h3 class="text-2xl font-bold text-on-surface tracking-tight">Çöp Kutusu</h3>
+    </div>
+</div>
+<!-- Main Canvas (Message List) -->
+<main class="flex-1 overflow-y-auto bg-surface-bright p-md lg:p-xl flex flex-col gap-sm">
+   
+    <!-- Messages Container -->
+    <div class="bg-surface-container-lowest rounded-xl soft-shadow border border-outline-variant/30 overflow-hidden flex flex-col">
+        <!-- Unread Message Item -->
+        @foreach (var item in Model)
+        {
+            <div class="flex items-center gap-4 p-4 border-b border-outline-variant/30 bg-primary-container/10 hover:bg-primary-container/20 transition-colors @(item.IsRead ? "bg-surface-bright font-normal text-on-surface-variant" : "bg-primary-container/20 font-bold text-on-surface") cursor-pointer group">
+                <div class="flex items-center gap-3">
+                    <input class="w-4 h-4 rounded border-outline-variant text-primary focus:ring-primary opacity-0 group-hover:opacity-100 transition-opacity" type="checkbox">
+                    <span onclick="toggleStar(@item.Id, this, false)" class="material-symbols-outlined cursor-pointer @(item.IsImpotant ? "text-yellow-500" : "text-outline-variant") hover:text-surface-tint transition-colors" style="font-size: 20px;">star</span>
+
+                </div>
+                <img class="w-9 h-9 rounded-full object-cover shrink-0 border border-outline-variant/20" data-alt="A small circular avatar portrait of a female executive. She looks professional and friendly, set against a soft, bright background that fits a clean, modern UI aesthetic." src="@item.Sender.ProfileImageUrl">
+                <div class="flex-1 flex flex-col sm:flex-row sm:items-center min-w-0 gap-1 sm:gap-4">
+                    <div class="w-full sm:w-56 flex flex-col shrink-0">
+                        <span class="font-bold text-on-surface truncate">@item.Sender.FirstName @item.Sender.LastName</span>
+                        <span class="text-[12px] text-on-surface-variant truncate">@item.Sender.Email</span>
+                    </div>
+                    <div class="flex-1 flex items-center min-w-0">
+
+                        @if (item.Category != null)
+                        {
+                            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full mr-3 shrink-0" style="background-color:@item.Category.Color">
+                                @item.Category?.CategoryName  @* Boş olan kategoriler hata fırlatmasın diye null ontrolü yapıyoruz ? o işe yarıyor *@
+                            </span>
+                        }
+                        <span class="font-bold text-on-surface truncate mr-2">@item.Subject</span>
+                        <span class="text-sm text-on-surface-variant truncate hidden md:inline">- @item.Body</span>
+                    </div>
+                </div>
+
+                <div class="font-label-bold text-label-bold text-primary shrink-0 w-16 text-right">@item.SendDate</div>
+
+                <div class="flex items-center gap-1 shrink-0 ml-4">
+
+                    <a href="/Message/MailDetail/@item.Id" class="p-2 rounded-full text-blue-600  hover:bg-surface-container transition-colors flex items-center justify-center" title="Mesajı Oku">
+                        <span class="material-symbols-outlined text-[20px]">visibility</span>
+                    </a>
+
+                     <a href="/Message/RestoreMessage/@item.Id" class="p-2 rounded-full text-red-600  hover:bg-error-container/30 transition-colors flex items-center justify-center" title="Mesajı Geri Yükle">
+                        <span class="material-symbols-outlined text-[20px]">restore_from_trash</span>
+                    </a> 
+
+                </div>
+            </div>
+        }
+    </div>
+
+</main>
+

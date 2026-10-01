@@ -1,10 +1,12 @@
 ﻿using IdentityMail.Web.DTOs.UserDtos;
 using IdentityMail.Web.Entities;
+using Mapster;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IdentityMail.Web.Controllers
 {
+
     public class AuthController(UserManager<AppUser> _userManager,
                                 SignInManager<AppUser> _signInManager) : Controller //primary constructor. DI yaparken constructor ve field oluşturmadan aynı işlemi yapıyor primary ctor.
     {
@@ -23,22 +25,18 @@ namespace IdentityMail.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterDto registerDto)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(registerDto);
+            }
+
             if(registerDto.Password != registerDto.ConfirmPassword)
             {
                 ModelState.AddModelError(string.Empty, "Şifreler birbiri ile uyumlu değil.");
                 return View(registerDto);
             }
 
-            //Manuel bir map leme işlemi yapıyoruz burda.
-            //Form dan gelen verileri AppUser entity sindeki alanlarla eşleştiriyoruz. Az sayıda sütun olduğu için manuel yapmak daha mantıklı.
-            //Auto Mapper burada gereksiz iş yükü olacağından elle yazdık.
-            var user = new AppUser 
-            {
-                Email= registerDto.Email,
-                FirstName =registerDto.FirstName,
-                LastName =registerDto.LastName,
-                UserName =registerDto.UserName
-            };
+            var user = registerDto.Adapt<AppUser>();
 
             var result = await _userManager.CreateAsync(user,registerDto.Password);
 
@@ -50,6 +48,7 @@ namespace IdentityMail.Web.Controllers
                 }
                 return View(registerDto);
             }
+            await _userManager.AddToRoleAsync(user, "User");
             return RedirectToAction("Login");
         }
 
@@ -62,10 +61,16 @@ namespace IdentityMail.Web.Controllers
         public async Task<IActionResult> Login(LoginDto loginDto)
         {
             var user = await _userManager.FindByEmailAsync(loginDto.Email);
+            ViewBag.NameSurname = user.FirstName + " " + user.LastName;
             if (user == null)
             {
                 ModelState.AddModelError(string.Empty, "Bu Email sistemde kayıtlı değil");
                 return View(loginDto);
+            }
+
+            if(user.IsActive == false)
+            {
+                ModelState.AddModelError(string.Empty, "Hesabınız sistem yöneticisi tarafından dondurulmuştur. Lütfen destek ile iletişime geçin.");
             }
 
             var result = await _signInManager.PasswordSignInAsync(user, loginDto.Password, false, false);
@@ -75,6 +80,11 @@ namespace IdentityMail.Web.Controllers
                 return View(loginDto);
             }
 
+            var isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
+            if (isAdmin)
+            {
+                return RedirectToAction("Dashboard", "AdminDashboard");
+            }
 
             return RedirectToAction("Index", "Message");
         }
@@ -83,6 +93,11 @@ namespace IdentityMail.Web.Controllers
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Login");
+        }
+
+        public IActionResult AccessDenied()
+        {
+            return View();
         }
 
 

@@ -1,0 +1,139 @@
+﻿@model List<UserRoleListDto>
+@{
+    ViewData["Title"] = "Rol Yönetimi";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- ========================================================================= -->
+<!-- 2. ROL YÖNETİMİ BÖLÜMÜ (#view-roles)                                      -->
+<!-- ========================================================================= -->
+<section class="view-section space-y-6" id="view-roles">
+    <div class="bg-white rounded-xl border border-slate-200/80 shadow-soft overflow-hidden">
+        <!-- Başlık ve Filtre Alanı -->
+        <div class="p-6 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+                <h2 class="text-lg font-bold text-slate-900">Kullanıcı Rol ve Yetki Yönetimi</h2>
+                <p class="text-xs text-slate-500 mt-0.5">Kullanıcıların erişim seviyelerini ve yetkilerini düzenleyin.</p>
+            </div>
+            <!-- Üstte hızlı arama ve rol filtresi -->
+            <div class="flex items-center gap-3">
+                <div class="relative w-full sm:w-60">
+                    <span class="material-symbols-outlined absolute left-3 top-2.5 text-slate-400 text-sm">search</span>
+                    <input class="w-full pl-8 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-purple-500" placeholder="İsim veya e-posta ara..." type="text" />
+                </div>
+                <select class="bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-700 font-medium focus:outline-none focus:ring-1 focus:ring-purple-500">
+                    <option value="all">Tüm Roller</option>
+                    <option value="admin">Admin</option>
+                    <option value="user">User</option>
+                </select>
+            </div>
+        </div>
+        <!-- Data Table -->
+        <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+                <thead class="bg-slate-50 text-slate-400 uppercase font-semibold text-[10px] tracking-wider border-b border-slate-100">
+                    <tr>
+                        <th class="py-3 px-6">Ad Soyad</th>
+                        <th class="py-3 px-6">Mevcut Rol</th>
+                        <th class="py-3 px-6 text-center">Hesap Durumu</th>
+                        <th class="py-3 px-6 text-center">Rol Değiştir</th>
+                        <th class="py-3 px-6 text-right">İşlem</th>
+                    </tr>
+                </thead>
+
+                <tbody class="divide-y divide-slate-100 text-slate-700">
+                    @foreach (var item in Model)
+                    {
+                        <tr class="hover:bg-slate-50/70 transition-colors">
+                            <!-- 1. Ad Soyad Sütunu -->
+                            <td class="py-3.5 px-6">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-full bg-purple-100 text-purple-700 font-bold text-xs flex items-center justify-center">
+                                        @item.FirstName.Substring(0, 1)@item.LastName.Substring(0, 1)
+                                    </div>
+                                    <div>
+                                        <div class="font-bold text-slate-900">@item.FirstName @item.LastName</div>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <!-- 2. Mevcut Rol Sütunu (Nokta ve Yazı Hatası Düzeltildi!) -->
+                            <td class="py-3.5 px-6">
+                                @if (item.Roles != null && item.Roles.Any())
+                                {
+                                    foreach (var roleName in item.Roles)
+                                    {
+                                        <!-- Dış Kutu (Arka plan) -->
+                                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-purple-100 text-purple-700 border border-purple-200 mr-1">
+                                            <!-- Minik Süs Noktası (Yazı bunun içinde DEĞİL, yanında!) -->
+                                            <span class="w-1.5 h-1.5 rounded-full bg-purple-600"></span>
+                                            @roleName
+                                        </span>
+                                    }
+                                }
+                                else
+                                {
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-slate-100 text-slate-500 border border-slate-200">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span> Rol Yok
+                                    </span>
+                                }
+                            </td>
+                            <!-- 3. SÜTUN: HESAP DURUMU (ORTALANMIŞ) -->
+                            <td class="py-3.5 px-6 text-center">
+                                <form asp-controller="AdminRoleAssign" asp-action="ToggleUserStatus" method="post" class="m-0 flex items-center justify-center">
+                                    <input type="hidden" name="userId" value="@item.Id" />
+
+                                    @if (item.IsActive)
+                                    {
+                                        <button type="submit" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-700 hover:bg-emerald-200 transition-colors shadow-sm">
+                                            <span class="material-symbols-outlined text-sm">check_circle</span>
+                                            Aktif
+                                        </button>
+                                    }
+                                    else
+                                    {
+                                        <button type="submit" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-bold bg-rose-100 text-rose-700 hover:bg-rose-200 transition-colors shadow-sm">
+                                            <span class="material-symbols-outlined text-sm">block</span>
+                                            Pasif (Banlı)
+                                        </button>
+                                    }
+                                </form>
+                            </td>
+
+                            <!-- 4. SÜTUN: ROL DEĞİŞTİRME FORMU (ORTALANMIŞ) -->
+                            <td class="py-3.5 px-6">
+                                <form asp-controller="AdminRoleAssign" asp-action="AssignRole" method="post" class="flex items-center justify-center gap-2 m-0">
+                                    <input type="hidden" name="UserId" value="@item.Id" />
+
+                                    <select name="RoleId" asp-items="@(ViewBag.Roles as List<SelectListItem>)" class="bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs text-slate-800 font-medium focus:outline-none focus:border-purple-500 w-36">
+                                        <option value="" disabled selected>Rol Seçiniz</option>
+                                    </select>
+
+                                    <button type="submit" class="px-3 py-1.5 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-xs font-semibold shadow-xs transition-colors flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-sm">save</span> Kaydet
+                                    </button>
+                                </form>
+                            </td>
+
+                            <!-- 5. SÜTUN: İŞLEM BUTONLARI (SAĞA YASLI) -->
+                            <td class="py-3.5 px-6">
+                                <div class="flex items-center justify-end gap-1">
+                                    <button type="button" class="p-1.5 text-slate-400 hover:text-purple-600 hover:bg-purple-50 rounded-lg transition-colors" title="Düzenle">
+                                        <span class="material-symbols-outlined text-base">edit</span>
+                                    </button>
+                                    <a href="#" class="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors" title="Sil">
+                                        <span class="material-symbols-outlined text-base">delete</span>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</section>
+
+
+

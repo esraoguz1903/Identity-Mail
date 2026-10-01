@@ -1,0 +1,75 @@
+﻿@*
+   Sayfalama partial view
+*@
+
+<!-- Ana Çerçeve -->
+<div class="flex items-center border border-outline-variant/30 rounded-lg bg-surface-container-lowest soft-shadow">
+
+    <!-- PREVIOUS (Önceki Sayfa) Butonu -->
+    @if (ViewBag.CurrentPage > 1)
+    {
+        <a asp-action='@ViewContext.RouteData.Values["action"]'
+           asp-route-SearchTerm="@Context.Request.Query["SearchTerm"]"
+           asp-route-SubjectSearch="@Context.Request.Query["SubjectSearch"]"
+           asp-route-SortBy="@Context.Request.Query["SortBy"]"
+           asp-route-Page="@(ViewBag.CurrentPage - 1)"
+           class="flex items-center gap-2 px-4 py-2 border-r border-outline-variant/30 text-primary font-label-md hover:bg-primary-container/10 transition-colors">
+            <span class="material-symbols-outlined text-[18px]">arrow_circle_left</span>
+            Previous
+        </a>
+    }
+    else
+    {
+        <!-- 1. Sayfadaysa Pasif Görünsün -->
+        <span class="flex items-center gap-2 px-4 py-2 border-r border-outline-variant/30 text-outline-variant font-label-md cursor-not-allowed">
+            <span class="material-symbols-outlined text-[18px]">arrow_circle_left</span>
+            Previous
+        </span>
+    }
+
+    <!-- SAYFA NUMARALARI -->
+    @for (int i = 1; i <= ViewBag.TotalPages; i++)
+    {
+        if (i == ViewBag.CurrentPage)
+        {
+            <!-- Aktif Sayfa (Mor Arka Plan) -->
+            <span class="px-4 py-2 border-r border-outline-variant/30 bg-primary-container/20 text-primary font-label-bold">
+                @i
+            </span>
+        }
+        else
+        {
+            <!-- Diğer Tıklanabilir Sayfalar -->
+            <a asp-action='@ViewContext.RouteData.Values["action"]'
+               asp-route-SearchTerm="@Context.Request.Query["SearchTerm"]"
+               asp-route-SubjectSearch="@Context.Request.Query["SubjectSearch"]"
+               asp-route-SortBy="@Context.Request.Query["SortBy"]"
+               asp-route-Page="@i"
+               class="px-4 py-2 border-r border-outline-variant/30 text-on-surface-variant font-label-md hover:bg-surface-container transition-colors">
+                @i
+            </a>
+        }
+    }
+
+    <!-- NEXT (Sonraki Sayfa) Butonu -->
+    @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+    {
+        <a asp-action='@ViewContext.RouteData.Values["action"]'
+           asp-route-SearchTerm="@Context.Request.Query["SearchTerm"]"
+           asp-route-SubjectSearch="@Context.Request.Query["SubjectSearch"]"
+           asp-route-SortBy="@Context.Request.Query["SortBy"]"
+           asp-route-Page="@(ViewBag.CurrentPage + 1)"
+           class="flex items-center gap-2 px-4 py-2 text-primary font-label-md hover:bg-primary-container/10 transition-colors">
+            Next
+            <span class="material-symbols-outlined text-[18px]">arrow_circle_right</span>
+        </a>
+    }
+    else
+    {
+        <!-- Son Sayfadaysa Pasif Görünsün -->
+        <span class="flex items-center gap-2 px-4 py-2 text-outline-variant font-label-md cursor-not-allowed">
+            Next
+            <span class="material-symbols-outlined text-[18px]">arrow_circle_right</span>
+        </span>
+    }
+</div>

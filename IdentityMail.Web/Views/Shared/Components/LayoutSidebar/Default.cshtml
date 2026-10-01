@@ -1,0 +1,103 @@
+﻿@model SidebarViewModel
+
+@{
+    Layout = null;
+}
+
+@* Sidebar *@
+
+<aside class="hidden md:flex flex-col h-screen w-sidebar-width fixed left-0 top-0 border-r border-outline-variant bg-surface-container-low pt-lg pb-0 gap-base z-50">
+    <!-- Header / Brand -->
+    <div class="px-lg flex items-center gap-sm mb-lg">
+        <div class="w-10 h-10 rounded-xl bg-primary-container flex items-center justify-center">
+            <span class="material-symbols-outlined text-on-primary-container" style="font-variation-settings: 'FILL' 1;">forum</span>
+        </div>
+        <div>
+            <h1 class="font-title-md text-title-md text-primary">Nova Connect</h1>
+            <p class="font-label-sm text-label-sm text-on-surface-variant">Kurumsal İletişim</p>
+        </div>
+    </div>
+    <!-- CTA -->
+    <div class="px-md mb-lg">
+        <a asp-controller="Message" asp-action="SendMail" class="w-full bg-primary-container text-on-primary-container hover:bg-primary-fixed hover:text-on-primary-fixed transition-colors rounded-full py-3 px-4 font-label-bold flex items-center justify-center gap-2 shadow-sm" style="text-decoration: none;">
+            <span class="material-symbols-outlined">edit</span>
+            Yeni Mesaj
+        </a>
+    </div>
+    <!-- Navigation Tabs -->
+    <nav class="flex-1 overflow-y-auto px-base">
+        <ul class="space-y-1">
+            <li>
+                <a class="bg-primary-container text-on-primary-container font-label-bold rounded-full mx-2 px-4 py-3 flex items-center justify-between group" href="/Message/Index/">
+                    <div class="flex items-center gap-3">
+                        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">inbox</span>
+                        <span>Gelen Kutusu</span>
+                    </div>
+                    <span class="bg-primary text-on-primary text-xs font-bold px-2 py-0.5 rounded-full">@Model.UnreadSendMessage</span>
+                </a>
+            </li>
+            <li>
+                <a class="text-on-surface-variant hover:bg-surface-container-high rounded-full mx-2 px-4 py-3 transition-colors flex items-center gap-3 group" href="/Message/Sentbox">
+                    <span class="material-symbols-outlined">send</span>
+                    <span class="font-body-sm text-body-sm">Gönderilenler</span>
+                </a>
+            </li>
+            <li>
+                <a class="text-on-surface-variant hover:bg-surface-container-high rounded-full mx-2 px-4 py-3 transition-colors flex items-center gap-3 group" href="/Message/DraftList">
+                    <span class="material-symbols-outlined">drafts</span>
+                    <span class="font-body-sm text-body-sm">Taslaklar</span>
+                </a>
+            </li>
+            <li>
+                <a class="text-on-surface-variant hover:bg-surface-container-high rounded-full mx-2 px-4 py-3 transition-colors flex items-center gap-3 group" href="/Message/ImportantMessages">
+                    <span class="material-symbols-outlined">star</span>
+                    <span class="font-body-sm text-body-sm">Önemli</span>
+                </a>
+            </li>
+            <li>
+                <a asp-controller="Category" asp-action="Index" class="text-on-surface-variant hover:bg-surface-container-high rounded-full mx-2 px-4 py-3 transition-colors flex items-center gap-3 group">
+                    <span class="material-symbols-outlined">category</span>
+                    <span class="font-body-sm text-body-sm">Kategori</span>
+                </a>
+            </li
+             <li>
+                <a asp-controller="Profile" asp-action="EditProfile" class="text-on-surface-variant hover:bg-surface-container-high rounded-full mx-2 px-4 py-3 transition-colors flex items-center gap-3 group">
+                    <span class="material-symbols-outlined">account_circle</span>
+                    <span class="font-body-sm text-body-sm">Profil Ayarları</span>
+                </a>
+            </li>
+             <li>
+                <a asp-controller="Message" asp-action="TrashMessages" class="text-on-surface-variant hover:bg-surface-container-high rounded-full mx-2 px-4 py-3 transition-colors flex items-center gap-3 group">
+                    <span class="material-symbols-outlined">delete</span>
+                    <span class="font-body-sm text-body-sm">Çöp Kutusu</span>
+                </a>
+            </li>
+            <li>
+                <a asp-controller="Auth" asp-action="Logout" class="text-on-surface-variant hover:bg-surface-container-high rounded-full mx-2 px-4 py-3 transition-colors flex items-center gap-3 group">
+                    <span class="material-symbols-outlined">logout</span>
+                    <span class="font-body-sm text-body-sm">Çıkış Yap</span>
+                </a>
+            </li>
+        </ul>
+
+    </nav>
+
+     <div class="mt-auto border-t border-outline-variant p-4 bg-surface-container-low">
+        
+        <div class="flex items-center gap-3 mb-3 px-2">
+                @if(Model.ProfileImageUrl == null)
+                {
+                    <div class="w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold text-lg shadow-md shrink-0">
+                          @Model.FirstName.Substring(0, 1)@Model.LastName.Substring(0,1)
+                </div>
+                }
+                else
+                {
+                    <img src="@Model.ProfileImageUrl" alt="Profil Resmi" class="w-10 h-10 rounded-full object-cover shadow-md shrink-0" />
+                }
+          
+                <p class="text-sm font-bold text-on-surface truncate">@Model.FirstName @Model.LastName</p>
+           
+        </div>
+    </div>
+</aside>

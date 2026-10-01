@@ -1,0 +1,58 @@
+﻿
+@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>403 - Yetkisiz Erişim</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+</head>
+<body class="bg-slate-50 min-h-screen flex items-center justify-center p-4">
+
+    <div class="max-w-2xl w-full text-center flex flex-col items-center">
+
+        <!-- Dev İkon ve Hata Kodu -->
+        <div class="relative">
+            <!-- Arka plandaki devasa soluk 403 yazısı -->
+            <h1 class="text-[150px] sm:text-[200px] font-black text-slate-200/50 leading-none select-none">
+                403
+            </h1>
+            <!-- Öndeki Kilit İkonu -->
+            <div class="absolute inset-0 flex items-center justify-center">
+                <div class="w-24 h-24 sm:w-32 sm:h-32 bg-rose-500 rounded-full flex items-center justify-center shadow-2xl shadow-rose-500/30 animate-bounce" style="animation-duration: 2s;">
+                    <span class="material-symbols-outlined text-white text-5xl sm:text-7xl font-bold">
+                        lock
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Metinler -->
+        <h2 class="mt-8 text-3xl sm:text-4xl font-extrabold text-slate-800 tracking-tight">
+            Erişim Reddedildi!
+        </h2>
+
+        <p class="mt-4 text-base sm:text-lg text-slate-500 max-w-lg mx-auto leading-relaxed">
+            Görünüşe göre bu sayfaya girmeye çalışıyorsunuz ama <strong class="text-rose-600">yeterli yetkiniz (rolünüz) yok.</strong> Bu sayfa sadece sistem yöneticilerine veya özel yetkili kullanıcılara açıktır.
+        </p>
+
+        <!-- Yönlendirme Butonları -->
+        <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+
+            <!-- Buradaki /Message kısmını kendi projenizin ana sayfasına göre değiştirebilirsiniz -->
+            <a href="/Auth/Login" class="w-full sm:w-auto px-6 py-3 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl flex items-center justify-center gap-2 transition-all shadow-lg shadow-slate-900/20">
+                <span class="material-symbols-outlined">home</span>
+                Giriş Ekranına Dön
+            </a>
+
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,61 @@
+﻿
+@{
+    Layout = null;
+}
+
+<form method="get" class="bg-surface-container-lowest rounded-xl p-4 soft-shadow border border-outline-variant/30 flex flex-wrap items-center gap-4 mb-sm">
+
+    <!-- Metin Araması -->
+    <div class="flex-1 min-w-[200px]">
+        <input type="text"
+               name="SearchTerm"
+               value="@Context.Request.Query["SearchTerm"]"
+               placeholder="İsim ara..."
+               class="w-full bg-surface-bright border border-outline-variant rounded-lg px-4 py-2 text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" />
+    </div>
+    <div class="flex-1 min-w-[200px]">
+        <input type="text"
+               name="SubjectSearch"
+               value="@Context.Request.Query["SubjectSearch"]"
+               placeholder="Konu ara..."
+               class="w-full bg-surface-bright border border-outline-variant rounded-lg px-4 py-2 text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" />
+    </div>
+
+    <!-- Açılır Liste (Kategori Filtresi) -->
+    <!-- Kategori Filtresi (Veritabanındaki gerçek ID'lere göre güncellendi) -->
+    <select name="CategoryId" class="bg-surface-bright border border-outline-variant rounded-lg px-4 py-2 text-on-surface focus:outline-none focus:border-primary transition-colors cursor-pointer">
+        <option value="">Tüm Kategoriler</option>
+        <option value="1" selected="@(Context.Request.Query["CategoryId"] == "1")">İş</option>
+        <option value="6" selected="@(Context.Request.Query["CategoryId"] == "6")">Kişisel</option>
+        <option value="8" selected="@(Context.Request.Query["CategoryId"] == "8")">Sosyal</option>
+    </select>
+
+    <!-- Durum Seçimi (Okundu / Okunmadı) -->
+    <select name="IsRead">
+        <option value="">Tümü</option>
+        <option value="true">Okunmuş</option>
+        <option value="false">Okunmamış</option>
+    </select>
+
+    <!-- Tarih Aralığı -->
+    <input type="date" name="StartDate" value="@Context.Request.Query["StartDate"]" />
+    <input type="date" name="EndDate" value="@Context.Request.Query["EndDate"]" />
+
+    <div class="flex-1 min-w-[150px]">
+        <select name="SortBy" class="w-full bg-surface-bright border border-outline-variant rounded-lg px-4 py-2 text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors cursor-pointer">
+
+            <option value="newest" selected="@(Context.Request.Query["SortOrder"] == "newest" || string.IsNullOrEmpty(Context.Request.Query["SortOrder"]))">En Yeni</option>
+            <option value="oldest" selected="@(Context.Request.Query["SortOrder"] == "oldest")">En Eski</option>
+        </select>
+    </div>
+
+    <div class="flex items-center gap-2">
+        <button type="submit" class="bg-primary text-on-primary px-6 py-2 rounded-lg font-label-bold hover:bg-primary/90 transition-colors shadow-sm">
+            Filtrele
+        </button>
+        <!-- Gerçek ve Profesyonel Temizle Butonu -->
+        <a asp-action="Index" class="bg-surface-container-highest text-on-surface px-6 py-2 rounded-lg font-label-bold hover:bg-outline-variant/30 transition-colors border border-outline-variant/50">
+            Temizle
+        </a>
+    </div>
+</form>

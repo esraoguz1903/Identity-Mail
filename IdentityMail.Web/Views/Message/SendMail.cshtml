@@ -1,27 +1,66 @@
-﻿
-@model SendMailDto
+﻿@model SendMailDto
 @{
     ViewData["Title"] = "SendMail";
 }
 
-<h1>Yeni Mail Gönder</h1>
+<div class="h-full w-full p-4 md:p-6 flex flex-col" style="height: calc(100vh - 64px);">
+    <div asp-validation-summary="All" class="text-error"></div> <br />
+    <form asp-controller="Message" asp-action="SendMail" method="post" class="flex-1 w-full bg-surface-container-lowest rounded-xl soft-shadow border border-outline-variant/50 flex flex-col overflow-hidden">
 
-<form method="post">
-    <label>Alıcı Mail</label>
-    <input type="text" asp-for="ReceiverMail" class="form-control" required />
-    <br />
-    <label>Konu</label>
-    <input type="text" asp-for="Subject" class="form-control" required />
-    <br />
-    <label>Mail İçeriği</label>
-    <textarea type="text" asp-for="Body" class="form-control" required rows ="10" >
+        <!-- Kart Başlığı (Eski Modal Header) -->
+        <div class="bg-primary-container text-on-primary-container px-6 py-4 flex items-center justify-between">
+            <h2 class="font-title-md text-body-lg font-semibold">Yeni Mesaj Oluştur</h2>
+            <!-- Çarpı ve Eksi ikonları silindi -->
+        </div>
 
-    </textarea>
-    <br />
+        <!-- Kart Gövdesi (Eski Modal Body) -->
+        <div class="flex-1 flex flex-col p-6 gap-4 overflow-y-auto">
 
-    <span class="text-danger">@Html.ValidationSummary()</span>
+            <span class="text-danger"></span> <!-- Hata mesajları buraya gelecek -->
+            <!-- Kime -->
+            <div class="flex items-center border-b border-outline-variant/30 py-2 gap-2">
+                <span class="text-on-surface-variant font-label-sm w-12">Kime:</span>
+                <div class="flex-1 flex flex-wrap gap-2">
+                    <input asp-for="ReceiverMail" class="flex-1 bg-transparent border-none outline-none font-body-sm text-on-surface focus:ring-0 p-0" placeholder="Alıcı e-posta adresini girin..." type="email" />
+                </div>
+            </div>
 
-    <button class="btn btn-outline-dark">Gönder</button>
+            <!-- Konu -->
+            <div class="flex items-center border-b border-outline-variant/30 py-2 gap-2">
+                <span class="text-on-surface-variant font-label-sm w-12">Konu:</span>
+                <input asp-for="Subject" class="flex-1 bg-transparent border-none outline-none font-body-sm text-on-surface focus:ring-0 p-0" placeholder="Mesajınızın konusu" type="text" />
+            </div>
+            <!--KAtegori-->
+            <div class="flex flex-col gap-xs mb-md">
+                <label class="font-label-bold text-label-bold text-on-surface" for="Category">Kategori</label>
+                <div class="relative">
+                    <i class="material-symbols-outlined material-icons absolute left-4 top-1/2 -translate-y-1/2 text-[#b39ddb]">category</i>
+                    <select asp-for="CategoryId" asp-items="@(ViewBag.ctgr as List<SelectListItem>)" class=" w-full pl-12 pr-md py-sm rounded-lg border border-outline-variant bg-surface-container-lowest focus:border-secondary focus:ring-2 focus:ring-secondary-fixed-dim transition-all outline-none font-body-sm text-body-sm appearance-none">
+                        <option value="">Lütfen Bir Kategori Seçin</option>
+                    </select>
+                    <i class="material-symbols-outlined material-icons absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">expand_more</i>
+                </div>
+            </div>
 
-</form>
+            <!-- Mesaj İçeriği -->
+            <textarea asp-for="Body" class="flex-1 w-full mt-2 bg-transparent border-none outline-none font-body-sm text-on-surface focus:ring-0 resize-none p-0" placeholder="Mesajınızı buraya yazın..." required></textarea>
+        </div>
 
+        <!-- Kart Alt Kısım (Footer) -->
+        <div class="px-6 py-4 border-t border-outline-variant/20 bg-surface-container-lowest flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                
+                <button type="submit" name="Islem" value="Send" class="bg-primary text-on-primary px-8 py-2.5 rounded-full font-label-bold hover:bg-primary/90 transition-colors shadow-sm">Gönder</button>
+
+                <button type="submit" name="Islem" value="Draft" class="text-primary px-4 py-2.5 rounded-full font-label-bold hover:bg-primary-container/20 transition-colors">Taslak Olarak Kaydet</button>
+            </div>
+
+            <a asp-controller="Message" asp-action="Index" class="p-2 text-on-surface-variant hover:text-error transition-colors rounded-full hover:bg-error-container/20" title="İptal Et">
+                <span class="material-symbols-outlined">delete</span>
+            </a>
+        </div>
+
+    </form>
+
+
+</div>

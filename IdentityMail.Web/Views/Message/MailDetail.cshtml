@@ -3,33 +3,214 @@
     ViewData["Title"] = "MailDetail";
 }
 
-<h1>Gelen Mail İçeriği </h1>
+<!DOCTYPE html>
 
-<table class="table table-striped">
-    <tr>
-        <th>Gönderen Ad Soyad : </th>
-        <td>@Model.Sender.FirstName @Model.Sender.LastName</td>
-    </tr>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Mesaj Detayı - NovaConnect</title>
+    <!-- Google Fonts: Inter & Material Symbols Outlined -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+          theme: {
+            extend: {
+              fontFamily: {
+                sans: ['Inter', 'sans-serif'],
+              },
+              colors: {
+                primary: '#6b5887',
+                'primary-container': '#eedeff',
+                'on-primary': '#ffffff',
+                'on-primary-container': '#25143f',
+                secondary: '#625b71',
+                'secondary-container': '#e8def8',
+                'on-secondary': '#ffffff',
+                'on-secondary-container': '#1e192b',
+                surface: '#f8f9fa',
+                'surface-bright': '#f8f9fa',
+                'surface-dim': '#ded8e1',
+                'surface-container-lowest': '#ffffff',
+                'surface-container-low': '#f3f4f5',
+                'surface-container': '#ece6f0',
+                'surface-container-high': '#e6e0e9',
+                'surface-container-highest': '#e0dbdf',
+                'on-surface': '#1d1b20',
+                'on-surface-variant': '#49454f',
+                'outline-variant': '#cac4d0',
+                outline: '#79747e',
+                background: '#f8f9fa',
+                'on-background': '#1d1b20',
+                error: '#ba1a1a',
+                'error-container': '#ffdad6',
+                'on-error': '#ffffff',
+                'on-error-container': '#410002',
+              }
+            }
+          }
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+            line-height: 1;
+        }
+    </style>
+</head>
+<body class="bg-surface-bright text-on-surface font-sans antialiased min-h-screen flex flex-col selection:bg-primary-container selection:text-on-primary-container">
+    <!-- Top App Navigation Bar -->
+    <!-- Main Workspace Layout -->
+    <div class="flex-1 flex overflow-hidden">
+        <!-- Left Sidebar -->
+        <!-- Main Content Area: Mail Detail -->
+        <main class="flex-1 overflow-y-auto px-4 py-6 md:px-8 md:py-8 flex flex-col items-center bg-surface-bright">
+            <div class="w-full max-w-4xl flex flex-col gap-4">
+                <!-- Top Navigation / Action Bar: Geri Dön Butonu -->
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <a asp-controller="Message" asp-action="Index" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors text-sm font-medium">
+                            <span class="material-symbols-outlined text-[20px]">arrow_back</span>
+                            <span>Geri Dön</span>
+                        </a>
+                        <div class="h-4 w-px bg-outline-variant/40"></div>
+                        <span class="text-xs text-on-surface-variant">Gelen Kutusu / Mesaj Detayı</span>
+                    </div>
+                </div>
+                <!-- Mail Detail Card Container -->
+                <article class="w-full bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant/20 p-6 md:p-8 flex flex-col gap-6">
+                    <!-- 1. Header: Mesaj Konusu (Subject) & Kategori Badge -->
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                        <div class="flex flex-wrap items-center gap-3">
+                            <h1 class="text-xl md:text-2xl font-bold tracking-tight text-on-surface">
+                                @Model.Subject
+                            </h1>
+                            <!-- Kategori Rozeti -->
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold  text-on-secondary-container">
+                                @if (Model.Category != null)
+                                {
+                                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-full mr-3 shrink-0" style="background-color:@Model.Category.Color">
+                                        @Model.Category?.CategoryName
+                                    </span>
+                                }
+                        </div>
+                    </div>
+                    <!-- 2. Sender Information (Avatar, Name, Email, Date/Time) -->
+                    <div class="flex items-center justify-between gap-4">
+                        <div class="flex items-center gap-3.5">
+                            <!-- Round Avatar -->
+                            <img class="w-12 h-12 rounded-full object-cover ring-2 ring-primary/20" src="@Model.Sender.ProfileImageUrl" />
+                            <div class="flex flex-col">
+                                <div class="flex items-center gap-2">
+                                    <span class="text-sm md:text-base font-semibold text-on-surface">@Model.Sender.FirstName @Model.Sender.LastName</span>
+                                </div>
+                                <span class="text-xs md:text-sm text-on-surface-variant">@Model.Sender.Email</span>
+                            </div>
+                        </div>
+                        <!-- Mesaj Tarihi ve Saati -->
+                        <div class="flex flex-col items-end text-right">
+                            <div class="flex items-center gap-1.5 text-xs md:text-sm font-medium text-on-surface">
+                                <span class="material-symbols-outlined text-[16px] text-on-surface-variant">schedule</span>
+                                <span>@Model.SendDate</span>
+                            </div>
+                            @* <span class="text-[11px] text-on-surface-variant mt-0.5">14 Ekim 2024 (2 saat önce)</span> *@
+                        </div>
+                    </div>
+                    <!-- 3. İnce, Hafif Ayırıcı Çizgi -->
+                    <hr class="border-t border-outline-variant/30 my-0" />
+                    <!-- 4. Mesaj Metni (Body) -->
+                    <div class="text-sm md:text-base text-on-surface leading-relaxed space-y-4">
+                        @Model.Body
+                    </div>
+                    <!-- 5. İnce Ayırıcı Çizgi -->
+                    <hr class="border-t border-outline-variant/30 my-0" />
+                    <!-- 6. Kartın En Altında Sağa Yaslı Butonlar: Cevapla & Sil -->
+                    <div class="flex items-center justify-end gap-3 pt-2">
+                        <!-- Şikayet Et Butonu -->
+                        <button type="button" onclick="document.getElementById('reportModal').classList.remove('hidden')" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl font-medium text-sm text-amber-600 hover:bg-amber-50 transition-colors active:scale-[0.98]">
+                            <span class="material-symbols-outlined text-[20px]">report</span>
+                            <span>Şikayet Et</span>
+                        </button>
+                        <!-- Cevapla Butonu -->
+                        <button onclick="document.getElementById('reply-form-container').classList.remove('hidden'); this.classList.add('hidden');" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-medium text-sm bg-primary text-on-primary shadow-sm hover:opacity-95 hover:shadow transition-all active:scale-[0.98]">
+                            <span class="material-symbols-outlined text-[20px]">reply</span>
+                            <span>Cevapla</span>
+                        </button>
 
-    <tr>
-        <th>Gönderen Mail : </th>
-        <td>@Model.Sender.Email</td>
-    </tr>
+                    </div>
+                    <div id="reply-form-container" class="hidden mt-6 bg-surface-container-lowest rounded-xl soft-shadow border border-outline-variant/30 p-md">
+                        <form asp-controller="Message" asp-action="SendMail" method="post">
+                            <input type="hidden" name="ReceiverMail" value="@Model.Sender.Email" />  @* Alıcının maili bize mail gönderen kişinin maili olduğu için gönderen kişinin maili cevaplarken alıcı mailine dönüşüyor. *@
+                            <input type="hidden" name="Subject" value="Re: @Model.Subject" />
+                            <input type="hidden" name="Category" value="@Model.Category" />
+                            <textarea name="Body" rows="7" value="@Model.Body" class="w-full p-3 rounded-lg border border-outline-variant bg-surface-container-highest focus:border-primary focus:ring-2 focus:ring-primary-fixed-dim outline-none resize-y transition-all" placeholder="Mesajınızı buraya yazın..." required></textarea>
+                            <div class="flex justify-end mt-4">
+                                <button type="submit" class="flex items-center gap-2 px-6 py-2 bg-primary text-on-primary rounded-full hover:bg-primary-fixed-dim transition-colors font-label-bold shadow-md">
+                                    <span class="material-symbols-outlined text-[18px]">send</span>
+                                    Gönder
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </article>
+            </div>
+            <!-- ŞİKAYET ET POPUP (MODAL) -->
+            <div id="reportModal" class="hidden fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/40 backdrop-blur-sm transition-all">
+                <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden transform transition-all">
 
-    <tr>
-        <th>Konu : </th>
-        <td>@Model.Subject</td>
-    </tr>
+                    <!-- Popup Başlık -->
+                    <div class="px-6 py-4 border-b border-slate-100 flex justify-between items-center bg-amber-50/50">
+                        <h3 class="font-bold text-amber-700 flex items-center gap-2">
+                            <span class="material-symbols-outlined">report</span> Mesajı Şikayet Et
+                        </h3>
+                        <button onclick="document.getElementById('reportModal').classList.add('hidden')" class="text-slate-400 hover:text-slate-600 transition-colors">
+                            <span class="material-symbols-outlined">close</span>
+                        </button>
+                    </div>
 
-    <tr>
-        <th>Tarih : </th>
-        <td>@Model.SendDate</td>
-    </tr>
+                    <!-- Popup Form -->
+                    <form asp-controller="AdminReport" asp-action="ReportComplaint" method="post" class="p-6">
+                        <input type="hidden" name="id" value="@Model.Id" />
 
-    <tr>
-        <th>Mail İçeriği : </th>
-        <td>@Model.Body</td>
-    </tr>
+                        <p class="text-sm text-slate-600 mb-5">Bu mesajı neden şikayet etmek istiyorsunuz? Lütfen bir sebep seçin.</p>
 
-</table>
-<a href="/Message/Index/" class="btn btn-outline-dark" >Mesajlara Geri Dön</a>
+                        <!-- Seçenekler -->
+                        <div class="space-y-3 mb-6">
+                            <label class="flex items-center gap-3 p-3 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition-colors">
+                                <input type="radio" name="Reason" value="Spam" class="w-4 h-4 text-amber-600 focus:ring-amber-500" required>
+                                <span class="text-sm font-medium text-slate-700">Spam / İstenmeyen Posta</span>
+                            </label>
+                            <label class="flex items-center gap-3 p-3 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition-colors">
+                                <input type="radio" name="Reason" value="Hakaret" class="w-4 h-4 text-amber-600 focus:ring-amber-500">
+                                <span class="text-sm font-medium text-slate-700">Hakaret veya Küfür</span>
+                            </label>
+                            <label class="flex items-center gap-3 p-3 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition-colors">
+                                <input type="radio" name="Reason" value="Dolandiricilik" class="w-4 h-4 text-amber-600 focus:ring-amber-500">
+                                <span class="text-sm font-medium text-slate-700">Dolandırıcılık (Phishing)</span>
+                            </label>
+                        </div>
+
+                        <!-- Butonlar -->
+                        <div class="flex justify-end gap-3 pt-2 border-t border-slate-100">
+                            <button type="button" onclick="document.getElementById('reportModal').classList.add('hidden')" class="px-5 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-100 rounded-xl transition-colors">
+                                İptal
+                            </button>
+                            <button type="submit" class="px-5 py-2 text-sm font-semibold text-white bg-amber-600 hover:bg-amber-700 rounded-xl shadow-sm transition-colors">
+                                Şikayeti Gönder
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

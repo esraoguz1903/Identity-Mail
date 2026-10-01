@@ -7,6 +7,8 @@ namespace IdentityMail.Web.Entities
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string? ProfileImageUrl { get; set; }
+        public bool IsActive { get; set; } = true;
+        public int WarningCount { get; set; } = 0; //Başlangıçta 0 uyarı
 
         public List<UserMessage> SentMessages { get; set; }
         public List<UserMessage> ReceivedMessages { get; set; }

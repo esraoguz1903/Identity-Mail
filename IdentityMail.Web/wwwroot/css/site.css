@@ -20,3 +20,84 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+/* Sidebar Ana Kapsayýcý */
+.mail-sidebar {
+    background-color: #f8f9fa; /* Açýk gri bir arka plan */
+    min-height: 100vh; /* Tüm ekran yüksekliðini kaplasýn */
+    border-right: 1px solid #dee2e6; /* Sað tarafa hafif bir çizgi */
+    padding-top: 15px;
+}
+
+/* Yeni Mesaj Butonu */
+.compose-btn {
+    padding: 10px 15px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+    .compose-btn:hover {
+        transform: translateY(-2px); /* Üzerine gelince hafif yukarý kalkma efekti */
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15) !important;
+    }
+
+/* Menü Listesi */
+.menu-list, .category-list {
+    margin: 0;
+    padding: 0;
+}
+
+.menu-item, .category-item {
+    margin-bottom: 5px;
+    border-radius: 8px; /* Köþeleri yuvarlama */
+    transition: background-color 0.2s ease;
+}
+
+    /* Link (a etiketleri) Ayarlarý */
+    .menu-item a, .category-item a {
+        display: block;
+        padding: 10px 15px;
+        color: #495057; /* Koyu gri, göz yormayan metin rengi */
+        text-decoration: none; /* Alt çizgisiz link */
+        font-weight: 500;
+    }
+
+/* Ýkonlarýn hizalanmasý ve rengi */
+.menu-icon {
+    width: 25px;
+    text-align: center;
+    color: #6c757d;
+    margin-right: 10px;
+}
+
+.category-icon {
+    font-size: 0.6rem;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+/* Mouse ile üzerine gelindiðinde (Hover) */
+.menu-item:hover, .category-item:hover {
+    background-color: #e9ecef;
+}
+
+/* Aktif (Seçili) sayfa tasarýmý */
+.menu-item.active {
+    background-color: #e8f4fd; /* Açýk mavi arka plan */
+}
+
+    .menu-item.active a {
+        color: #0d6efd; /* Mavi metin */
+        font-weight: bold;
+    }
+
+    .menu-item.active .menu-icon {
+        color: #0d6efd; /* Ýkonu da mavi yap */
+    }
+
+/* Kategoriler Baþlýðý */
+.sidebar-subtitle {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}

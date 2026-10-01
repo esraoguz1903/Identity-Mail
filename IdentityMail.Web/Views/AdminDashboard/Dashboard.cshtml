@@ -1,0 +1,223 @@
+﻿@model AdminDashboardViewModel
+@{
+    ViewData["Title"] = "Gösterge Paneli";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- ========================================================================= -->
+<!-- 1. GÖSTERGE PANELİ (DASHBOARD) - Varsayılan Aktif Görünüm (#view-dashboard) -->
+<!-- ========================================================================= -->
+<section class="view-section active space-y-6" id="view-dashboard">
+    <!-- 6 Adet Şık Stat Card (Özenli renkler, ikonlar, trend indikatörleri) -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
+        <!-- 1. Toplam ve Aktif Kullanıcı -->
+        <div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-soft hover:shadow-soft-md transition-shadow">
+            <div class="flex items-center justify-between">
+                <span class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Kullanıcılar</span>
+                <div class="w-8 h-8 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-lg">group</span>
+                </div>
+            </div>
+            <div class="mt-2.5 flex items-baseline gap-1.5">
+                <span class="text-2xl font-bold text-slate-900">@Model.TotalUser</span>
+                <span class="text-[10px] font-bold px-1.5 py-0.5 bg-emerald-100 text-emerald-700 rounded-full flex items-center gap-0.5">
+                    <span class="w-1 h-1 rounded-full bg-emerald-500 animate-pulse"></span> Aktif
+                </span>
+            </div>
+
+        </div>
+        <!-- 2. Bugün Gönderilen Mesaj -->
+        <div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-soft hover:shadow-soft-md transition-shadow">
+            <div class="flex items-center justify-between">
+                <span class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Bugün Gönderilen</span>
+                <div class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-lg">send</span>
+                </div>
+            </div>
+            <div class="mt-2.5 flex items-baseline gap-1.5">
+                <span class="text-2xl font-bold text-slate-900">@Model.TodaySendMessage</span>
+                <span class="text-[11px] text-slate-500">Mesaj</span>
+            </div>
+
+        </div>
+        <!-- 3. Toplam Gönderilen Mesaj -->
+        <div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-soft hover:shadow-soft-md transition-shadow">
+            <div class="flex items-center justify-between">
+                <span class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Toplam Gönderilen</span>
+                <div class="w-8 h-8 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-lg">forum</span>
+                </div>
+            </div>
+            <div class="mt-2.5 flex items-baseline gap-1.5">
+                <span class="text-2xl font-bold text-slate-900">@Model.TotalMessage</span>
+                <span class="text-[11px] text-slate-500">Mesaj</span>
+            </div>
+
+        </div>
+        <!-- 4. Toplam Okunmamış Mesaj -->
+        <div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-soft hover:shadow-soft-md transition-shadow">
+            <div class="flex items-center justify-between">
+                <span class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Okunmamış Mesaj</span>
+                <div class="w-8 h-8 rounded-lg bg-violet-50 text-violet-600 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-lg">mark_email_unread</span>
+                </div>
+            </div>
+            <div class="mt-2.5 flex items-baseline gap-1.5">
+                <span class="text-2xl font-bold text-violet-700">@Model.UnreadMessage</span>
+                <span class="text-[11px] text-slate-500">Okunmamış</span>
+            </div>
+
+        </div>
+        <!-- 5. Çöp Kutusundaki Mesaj -->
+        <div class="bg-white p-4 rounded-xl border border-slate-200/80 shadow-soft hover:shadow-soft-md transition-shadow">
+            <div class="flex items-center justify-between">
+                <span class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Çöp Kutusu</span>
+                <div class="w-8 h-8 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-lg">auto_delete</span>
+                </div>
+            </div>
+            <div class="mt-2.5 flex items-baseline gap-1.5">
+                <span class="text-2xl font-bold text-slate-900">@Model.TrashMessages</span>
+                <span class="text-[11px] text-slate-500">Mesaj</span>
+            </div>
+            <div class="mt-2 pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] text-amber-600">
+                <span class="truncate">30 gün içinde silinecek</span>
+            </div>
+        </div>
+        <!-- 6. Bekleyen Şikayetler -->
+        <div class="bg-white p-4 rounded-xl border border-rose-200 shadow-soft hover:shadow-soft-md transition-shadow bg-rose-50/20">
+            <div class="flex items-center justify-between">
+                <span class="text-[11px] font-semibold text-rose-700 uppercase tracking-wider">Bekleyen Şikayet</span>
+                <div class="w-8 h-8 rounded-lg bg-rose-100 text-rose-600 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-lg">gpp_bad</span>
+                </div>
+            </div>
+            <div class="mt-2.5 flex items-baseline gap-1.5">
+                <span class="text-2xl font-bold text-rose-600">@Model.ReportMessages</span>
+                <span class="text-[11px] font-semibold text-rose-500">Bildirim</span>
+            </div>
+            <div class="mt-2 pt-2 border-t border-rose-100 flex items-center justify-between text-[11px]">
+                <span class="text-rose-600 font-medium">Acil aksiyon</span>
+                <button class="text-rose-700 font-bold hover:underline" onclick="switchTab('reports')">İncele →</button>
+            </div>
+        </div>
+    </div>
+    <!-- Altında 2'li Grid Alanı -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- 1. Alan (Sol): 'En Fazla Mesaj Gönderen Kullanıcılar' (Top 5 Lider Tablosu) -->
+        <div class="bg-white rounded-xl border border-slate-200/80 shadow-soft p-5 sm:p-6">
+            <div class="flex items-center justify-between pb-4 border-b border-slate-100">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-8 h-8 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-lg">leaderboard</span>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-bold text-slate-900">En Fazla Mesaj Gönderen Kullanıcılar</h3>
+                        <p class="text-xs text-slate-500">Bu haftanın en aktif takım üyeleri (Top 5)</p>
+                    </div>
+                </div>
+                <span class="text-xs font-semibold px-2.5 py-1 bg-purple-50 text-purple-700 rounded-lg">Bu Hafta</span>
+            </div>
+            <!-- Liste -->
+            <!-- Liste -->
+            <div class="mt-3 divide-y divide-slate-100">
+                @if (Model.TopSenders != null && Model.TopSenders.Any())
+                {
+                    int rank = 1;
+                    @foreach (var sender in Model.TopSenders)
+                    {
+                        <div class="py-3 flex items-center justify-between hover:bg-slate-50/50 rounded-lg px-2 transition-colors">
+                            <div class="flex items-center gap-3">
+                                <!-- Sıralama Rozeti (#1, #2...) -->
+                                <span class="w-6 text-center text-xs font-bold @(rank == 1 ? "text-amber-500" : "text-slate-400") flex items-center justify-center">
+                                    @if (rank == 1)
+                                    {
+                                        <span class="material-symbols-outlined text-base">military_tech</span>
+                                    }
+                                    else
+                                    {
+                                        <span>#@rank</span>
+                                    }
+                                </span>
+                                <div class="relative">
+                                    <div class="w-9 h-9 rounded-full bg-purple-100 text-purple-700 font-bold flex items-center justify-center text-xs">
+                                        @(string.IsNullOrEmpty(sender.FirstName) ? "U" : sender.FirstName.Substring(0, 1))@(string.IsNullOrEmpty(sender.LastName) ? "" : sender.LastName.Substring(0, 1))
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="text-xs font-bold text-slate-900">@sender.FirstName @sender.LastName</div>
+                                </div>
+                            </div>
+                            <div class="text-right flex items-center gap-3">
+                                <div>
+                                    <div class="text-xs font-bold text-purple-700 font-mono">@sender.MessageCount</div>
+                                    <div class="text-[10px] text-slate-400">mesaj</div>
+                                </div>
+                            </div>
+                        </div>
+                        rank++;
+                    }
+                }
+                else
+                {
+                    <div class="py-4 text-center text-xs text-slate-400">Henüz mesaj gönderen kullanıcı bulunamadı.</div>
+                }
+            </div>
+        </div>
+        <!-- 2. Alan (Sağ): 'En Çok Kullanılan Kategoriler' (Dağılım & Kullanım Oranları) -->
+        <div class="bg-white rounded-xl border border-slate-200/80 shadow-soft p-5 sm:p-6 flex flex-col justify-between">
+            <div>
+                <div class="flex items-center justify-between pb-4 border-b border-slate-100">
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-8 h-8 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-lg">pie_chart</span>
+                        </div>
+                        <div>
+                            <h3 class="text-sm font-bold text-slate-900">En Çok Kullanılan Kategoriler</h3>
+                            <p class="text-xs text-slate-500">Dağılım &amp; Kullanım Oranları</p>
+                        </div>
+                    </div>
+                    <span class="text-xs font-semibold px-2.5 py-1 bg-purple-100 text-purple-700 rounded-lg">Bu Hafta</span>
+                </div>
+                <div class="mt-5 space-y-4">
+                    @{int ctgrrank = 1;}
+                    @foreach(var ctgr in Model.TopCategories)
+                    {
+                        {
+                            <div class="py-3 flex items-center justify-between hover:bg-slate-50/50 rounded-lg px-2 transition-colors">
+                                <!-- Sol Taraf: İkon ve Kategori Adı (Tek bir flex kapsayıcıda) -->
+                                <div class="flex items-center gap-3">
+                                    <span class="w-6 text-center text-xs font-bold @(ctgrrank == 1 ? "text-amber-500" : "text-slate-400") flex items-center justify-center">
+                                        @if (ctgrrank == 1)
+                                        {
+                                            <span class="material-symbols-outlined text-base">military_tech</span>
+                                        }
+                                        else
+                                        {
+                                            <span>#@ctgrrank</span>
+                                        }
+                                    </span>
+
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-2.5 h-2.5 rounded-full bg-purple-600 shrink-0"></span>
+                                        <span class="text-xs font-bold text-slate-900">@ctgr.CategoryName</span>
+                                    </div>
+                                </div>
+
+                                <!-- Sağ Taraf: Mesaj Sayısı -->
+                                <div class="text-right">
+                                    <span class="text-xs font-bold text-purple-700 font-mono">@ctgr.MessageCount</span>
+                                    <span class="text-[10px] text-slate-400 ml-1">mesaj</span>
+                                </div>
+                            </div>
+
+                            ctgrrank++;
+                        }
+                    }
+                   
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

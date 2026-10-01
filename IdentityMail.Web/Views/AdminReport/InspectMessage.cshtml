@@ -1,0 +1,85 @@
+﻿@model ReportMessageDto
+@{
+    ViewData["Title"] = "Şikayet Edilen Mesaj Detayı";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="p-4 sm:p-6 lg:p-8 w-full max-w-5xl mx-auto flex flex-col gap-6">
+   
+        <!-- Üst Bar: Geri Dön ve Başlık -->
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <a asp-controller="AdminReport" asp-action="Index" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-slate-500 hover:text-slate-800 hover:bg-slate-100 transition-colors text-sm font-semibold">
+                    <span class="material-symbols-outlined text-[20px]">arrow_back</span>
+                    <span>Şikayet Listesine Dön</span>
+                </a>
+                <div class="h-4 w-px bg-slate-200"></div>
+                <span class="text-xs font-medium text-slate-400 uppercase tracking-wider">İnceleme Ekranı</span>
+            </div>
+        </div>
+
+        <!-- KIRMIZI UYARI BANNERI (Şikayet Detayı) -->
+        <div class="bg-rose-50 border border-rose-200 rounded-2xl p-5 flex items-start gap-4 shadow-sm">
+            <div class="w-10 h-10 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center shrink-0">
+                <span class="material-symbols-outlined text-xl">gpp_bad</span>
+            </div>
+            <div class="flex-1">
+                <h3 class="text-rose-800 font-bold text-sm">Bu mesaj sistem yönetimi tarafından incelemeye alınmıştır!</h3>
+                <p class="text-rose-600 text-xs mt-1 leading-relaxed">
+                    Bu e-posta, <strong>@Model.ReceiverFirstName @Model.ReceiverLastName</strong> tarafından
+                    <span class="font-bold underline decoration-rose-300 underline-offset-2">@Model.ReportReason</span>
+                    gerekçesiyle şikayet edilmiştir. Lütfen içeriği inceleyip uygun aksiyonu alınız.
+                </p>
+            </div>
+        </div>
+
+        <!-- MESAJIN KENDİSİ (Orijinal E-Posta) -->
+        <article class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden flex flex-col">
+
+            <!-- E-Posta Üst Bilgileri (Kimden Kime) -->
+            <div class="p-6 border-b border-slate-100 bg-slate-50/50 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div class="flex items-center gap-4">
+                    <!-- Şüpheli Gönderici Avatarı -->
+                    <div class="w-12 h-12 rounded-full bg-slate-200 text-slate-600 font-bold flex items-center justify-center text-lg border-2 border-white shadow-sm">
+                        @Model.SenderFirstName.Substring(0, 1)@Model.SenderLastName.Substring(0, 1)
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="font-bold text-slate-900">@Model.SenderFirstName @Model.SenderLastName</span>
+                            <span class="px-2 py-0.5 bg-slate-200 text-slate-600 text-[10px] font-bold rounded-md uppercase tracking-wider">Şüpheli</span>
+                        </div>
+                        <!-- İsterseniz Email adresini de buraya ekleyebilirsiniz -->
+                        <div class="text-xs text-slate-500 mt-0.5">Gönderim Tarihi: @Model.SendDate.ToString("dd MMM yyyy HH:mm")</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- E-Posta İçeriği (Konu ve Metin) -->
+            <div class="p-6 md:p-8 flex flex-col gap-6">
+                <div>
+                    <span class="text-xs font-semibold text-slate-400 uppercase tracking-widest">Mesaj İçeriği</span>
+                    <div class="mt-2 p-5 bg-slate-50 border border-slate-100 rounded-xl text-slate-700 text-sm leading-relaxed font-sans whitespace-pre-wrap">@Model.Body</div>
+                </div>
+            </div>
+
+    <!-- YÖNETİCİ AKSİYON BUTONLARI (En Alt Kısım) -->
+    <div class="p-6 border-t border-slate-100 bg-slate-50 flex flex-col sm:flex-row items-center justify-end gap-3">
+
+        <!-- Şikayeti Yoksay (Temizle) -->
+        <form asp-controller="AdminReport" asp-action="IgnoreComplaint" method="post" class="w-full sm:w-auto m-0">
+            <input type="hidden" name="id" value="@Model.Id" />
+            <button type="submit" class="w-full sm:w-auto px-5 py-2.5 bg-white border border-slate-300 text-slate-700 hover:bg-slate-100 hover:text-slate-900 rounded-xl text-sm font-semibold transition-colors flex items-center justify-center gap-2 shadow-sm">
+                <span class="material-symbols-outlined text-lg">done_all</span> Şikayeti Yoksay
+            </button>
+        </form>
+
+        <!-- Mesajı Tamamen Sil -->
+        <form asp-controller="AdminReport" asp-action="DeleteMessage" method="post" class="w-full sm:w-auto m-0">
+            <input type="hidden" name="id" value="@Model.Id" />
+            <button type="submit" class="w-full sm:w-auto px-5 py-2.5 bg-white border border-rose-200 text-rose-600 hover:bg-rose-50 rounded-xl text-sm font-semibold transition-colors flex items-center justify-center gap-2 shadow-sm">
+                <span class="material-symbols-outlined text-lg">delete_forever</span> Mesajı Sil
+            </button>
+        </form>
+    </div>
+    </article>
+</div>
