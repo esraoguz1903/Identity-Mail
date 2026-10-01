@@ -68,13 +68,3 @@ Projeyi yerel bilgisayarınızda (local environment) çalıştırmak için aşa�
 4. **Uygulamayı Başlatın**
    Visual Studio üzerinden `F5`'e basarak veya terminalden `dotnet run` komutu ile uygulamayı ayağa kaldırabilirsiniz.
 
-<br/>
-
-## 🤝 Katkıda Bulunma
-
-Bu proje gelişime açıktır. Eğer projeye katkıda bulunmak isterseniz:
-1. Bu repoyu fork'layın.
-2. Yeni bir özellik dalı (branch) oluşturun (`git checkout -b yeni-ozellik`).
-3. Değişikliklerinizi commit'leyin (`git commit -m 'Harika bir özellik eklendi'`).
-4. Dalınıza (branch) push yapın (`git push origin yeni-ozellik`).
-5. Bir **Pull Request** açın!
