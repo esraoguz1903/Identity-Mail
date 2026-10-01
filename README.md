@@ -36,14 +36,14 @@ Sadece bir mesajlaşma aracı olmanın ötesinde; rol tabanlı yetkilendirme, ş
 
 | | |
 |:---:|:---:|
-| <img src="screenshots/1.png" width="400"/> | <img src="screenshots/2.png" width="400"/> |
-| <img src="screenshots/3.png" width="400"/> | <img src="screenshots/4.png" width="400"/> |
-| <img src="screenshots/5.png" width="400"/> | <img src="screenshots/6.png" width="400"/> |
-| <img src="screenshots/7.png" width="400"/> | <img src="screenshots/8.png" width="400"/> |
-| <img src="screenshots/9.png" width="400"/> | <img src="screenshots/10.png" width="400"/> |
-| <img src="screenshots/11.png" width="400"/> | <img src="screenshots/12.png" width="400"/> |
-| <img src="screenshots/13.png" width="400"/> | <img src="screenshots/14.png" width="400"/> |
-| <img src="screenshots/15.png" width="400"/> | <img src="screenshots/16.png" width="400"/> |
+| <img src="Screenshots/1.png" width="400"/> | <img src="Screenshots/2.png" width="400"/> |
+| <img src="Screenshots/3.png" width="400"/> | <img src="Screenshots/4.png" width="400"/> |
+| <img src="Screenshots/5.png" width="400"/> | <img src="Screenshots/6.png" width="400"/> |
+| <img src="Screenshots/7.png" width="400"/> | <img src="Screenshots/8.png" width="400"/> |
+| <img src="Screenshots/9.png" width="400"/> | <img src="Screenshots/10.png" width="400"/> |
+| <img src="Screenshots/11.png" width="400"/> | <img src="Screenshots/12.png" width="400"/> |
+| <img src="Screenshots/13.png" width="400"/> | <img src="Screenshots/14.png" width="400"/> |
+| <img src="Screenshots/15.png" width="400"/> | <img src="Screenshots/16.png" width="400"/> |
 
 <br/>
 
